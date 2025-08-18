@@ -7,6 +7,9 @@ on:
 jobs: 
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16,18, 20]
     steps:
        - name: get code
          uses: actions/checkout@v3
@@ -20,7 +23,7 @@ jobs:
          if: steps.cache.outputs.cache-hit != 'true'
          uses: actions/setup-node@v3
          with:
-           node-version: '18'
+           node-version: ${{ matrix.node-version }}
        - name: build
          run: npm run start
   Test:
